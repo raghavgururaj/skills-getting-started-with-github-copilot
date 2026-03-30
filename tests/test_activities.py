@@ -88,7 +88,8 @@ def test_unregister_removes_existing_participant(client):
     # Arrange
     activity_name = "Chess Club"
     email_to_remove = "michael@mergington.edu"
-    before_count = len(client.get("/activities").json()[activity_name]["participants"])
+    activities_before = client.get("/activities").json()
+    before_count = len(activities_before[activity_name]["participants"])
 
     # Act
     response = client.delete(
@@ -126,7 +127,8 @@ def test_unregister_rejects_unknown_activity(client):
 def test_unregister_rejects_missing_participant(client):
     # Arrange
     activity_name = "Chess Club"
-    missing_email = "nosuchstudent@mergington.edu"
+    activities_before = client.get("/activities").json()
+    before_count = len(activities_before[activity_name]["participants"])
     before_count = len(client.get("/activities").json()[activity_name]["participants"])
 
     # Act
